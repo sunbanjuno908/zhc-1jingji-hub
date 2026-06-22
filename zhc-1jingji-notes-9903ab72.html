@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <title>一竞技 · 站点介绍与说明</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f6fafb;
+            color: #1b2b2f;
+            line-height: 1.7;
+            padding: 0 16px;
+        }
+        .page-wrap {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 40px 0 60px;
+        }
+        /* 网格卡片背景装饰 */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(0, 150, 136, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 136, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        /* 文章卡片式主体 */
+        .post-card {
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0, 80, 70, 0.06), 0 2px 6px rgba(0, 60, 55, 0.03);
+            padding: 36px 28px 40px;
+            margin-bottom: 24px;
+            transition: box-shadow 0.2s;
+        }
+        .post-card:hover {
+            box-shadow: 0 12px 28px rgba(0, 120, 110, 0.08);
+        }
+
+        /* 文章标题区 */
+        .article-header {
+            margin-bottom: 24px;
+            border-bottom: 2px solid rgba(0, 150, 136, 0.2);
+            padding-bottom: 16px;
+        }
+        .article-title {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #0a3d3a;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+        .article-title small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #5e7b78;
+            margin-left: 10px;
+        }
+        .article-meta {
+            font-size: 0.9rem;
+            color: #5d7c78;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin-top: 8px;
+        }
+        .article-meta span {
+            background: #ebf3f0;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #1d5a55;
+        }
+
+        /* 导语 */
+        .lead {
+            font-size: 1.1rem;
+            background: #f0f8f5;
+            padding: 14px 20px;
+            border-radius: 18px;
+            border-left: 4px solid #009688;
+            color: #1f4642;
+            margin-bottom: 28px;
+        }
+
+        /* 正文段落 */
+        .post-content p {
+            margin-bottom: 1.4em;
+        }
+        .post-content strong {
+            color: #0b5f56;
+            font-weight: 600;
+        }
+        .post-content a {
+            color: #08786b;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 150, 136, 0.35);
+            transition: border-color 0.15s;
+            font-weight: 500;
+        }
+        .post-content a:hover {
+            border-bottom-color: #009688;
+        }
+
+        /* 引用卡片（提示块） */
+        .callout {
+            background: #e5f2ef;
+            border-radius: 20px;
+            padding: 18px 22px;
+            margin: 28px 0 18px;
+            border: 1px solid rgba(0, 150, 136, 0.25);
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.7);
+        }
+        .callout-title {
+            font-weight: 600;
+            color: #09544c;
+            margin-bottom: 6px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .callout-title::before {
+            content: "📌";
+            font-size: 1.1rem;
+        }
+        .callout p {
+            margin-bottom: 0.5em;
+        }
+
+        /* 特色网格（极简卡片） */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0 18px;
+        }
+        .feature-item {
+            background: #f9fdfb;
+            border-radius: 18px;
+            padding: 16px 14px;
+            border: 1px solid rgba(0, 130, 120, 0.12);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        }
+        .feature-item h4 {
+            font-size: 0.95rem;
+            color: #0b5d54;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .feature-item p {
+            font-size: 0.9rem;
+            color: #2b5a54;
+            margin-bottom: 0;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            margin-top: 30px;
+            background: #f3f9f7;
+            border-radius: 20px;
+            padding: 16px 22px 18px;
+        }
+        .faq-mini h3 {
+            font-size: 1.1rem;
+            color: #074a43;
+            margin-bottom: 12px;
+            border-left: 3px solid #009688;
+            padding-left: 12px;
+        }
+        .faq-item {
+            margin-bottom: 12px;
+        }
+        .faq-item strong {
+            display: block;
+            font-size: 0.9rem;
+            color: #0c5e55;
+            margin-bottom: 2px;
+        }
+        .faq-item p {
+            font-size: 0.9rem;
+            margin: 0 0 0 8px;
+            color: #2c5b55;
+        }
+
+        /* 访问句 / 页脚 */
+        .visit-note {
+            margin-top: 32px;
+            padding: 16px 10px 6px;
+            border-top: 1px solid #d2e3de;
+            font-size: 0.95rem;
+            color: #3b6862;
+            text-align: center;
+        }
+        .visit-note a {
+            color: #08786b;
+            font-weight: 500;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .post-card {
+                padding: 24px 16px 28px;
+            }
+            .article-title {
+                font-size: 1.6rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .lead {
+                font-size: 1rem;
+                padding: 12px 14px;
+            }
+            .article-meta {
+                gap: 8px;
+            }
+        }
+        @media (max-width: 420px) {
+            .post-card {
+                border-radius: 20px;
+                padding: 18px 12px 22px;
+            }
+            .article-title small {
+                display: block;
+                margin-left: 0;
+                margin-top: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="page-wrap">
+
+    <article class="post-card">
+        <div class="article-header">
+            <h1 class="article-title">
+                一竞技 · 站点说明
+                <small>可信 · 透明 · 服务向</small>
+            </h1>
+            <div class="article-meta">
+                <span>📋 介绍页</span>
+                <span>🕊️ 内容整理于近期</span>
+                <span>⚙️ 版本 1.0</span>
+            </div>
+        </div>
+
+        <div class="lead">
+            这是一份关于 <a href="https://zhc-1jingji.com">一竞技</a> 的站点介绍与可信说明。我们尝试用平实的语言，把平台定位、服务方向以及常见关注点梳理清楚。内容基于公开信息与常规业务逻辑撰写，不构成服务承诺。
+        </div>
+
+        <div class="post-content">
+            <p><strong>一竞技</strong> 是一个面向网络竞技爱好者的综合服务站点。平台主要围绕赛事信息整合、数据查询以及社区互动提供基础功能。运营团队持续优化内容更新机制，确保信息的及时性与准确性。</p>
+
+            <p>从站点定位来看，这里并非简单的信息聚合，而是尝试建立更清晰的分类结构，让用户能够快速找到自己关注的模块。无论是赛事日程、队伍动态，还是基础数据浏览，<a href="https://zhc-1jingji.com">一竞技</a> 都保持相对克制的设计，避免过度打扰。</p>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>📊 信息整合</h4>
+                    <p>多来源数据交叉校验，减少错误与延迟。团队人工复核关键节点。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🔍 透明陈述</h4>
+                    <p>功能边界与数据来源均有说明，不做模糊宣传，用户可自行判断。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🧩 轻量交互</h4>
+                    <p>界面遵循简洁优先，操作路径较短，移动端同样流畅。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🔄 持续迭代</h4>
+                    <p>根据反馈与行业变化定期调整内容模块，保持合理更新。</p>
+                </div>
+            </div>
+
+            <p>很多用户关心站点的可信度。这里需要说明：<strong>一竞技</strong> 不参与任何形式的资金交易或赛事预测，也不提供非法的竞技外围服务。所有公开内容均以信息展示为目的，不引导用户进行任何形式的投注或充值。用户可以把它当作一个信息参考节点，而非决策工具。</p>
+
+            <div class="callout">
+                <div class="callout-title">可信说明</div>
+                <p>本页面所描述的站点仅作为信息整合与展示用途。运营方不参与任何竞技结果的判定，也不对第三方链接的内容负责。建议用户在使用过程中保持理性判断，如有疑问可通过站点公开的联系渠道进行核实。</p>
+            </div>
+
+            <p>在内容层面，<a href="https://zhc-1jingji.com">一竞技</a> 的编辑团队会筛选可验证的公开数据，并标注引用或更新时间。对于用户提交的反馈，也会在合理周期内进行核查与修正。这种机制虽然无法做到零误差，但在同类站点中已经体现了足够的严谨态度。</p>
+
+            <p>另外值得一提的是，该站点在移动端做了较多适配工作。从卡片布局到字体大小，都考虑了单手操作和快速浏览的需求。如果你经常使用手机查看竞技资讯，可能会发现它的交互节奏比较舒服。</p>
+
+            <!-- FAQ 摘要 -->
+            <div class="faq-mini">
+                <h3>常见关注点 · 摘要</h3>
+                <div class="faq-item">
+                    <strong>❓ 一竞技是否涉及资金交易？</strong>
+                    <p>不涉及。平台不提供充值、转账、投注或任何形式的资金通道，所有功能仅限信息层面。</p>
+                </div>
+                <div class="faq-item">
+                    <strong>❓ 信息来源可靠吗？</strong>
+                    <p>团队优先采用可溯源的公开数据，并定期比对官方渠道。同时标注数据获取时间，方便用户参考。</p>
+                </div>
+                <div class="faq-item">
+                    <strong>❓ 内容更新频率如何？</strong>
+                    <p>核心模块每周至少更新一次，热点赛事期间会增加刷新频次。具体更新日志可在站内查看。</p>
+                </div>
+            </div>
+
+        </div> <!-- post-content end -->
+
+        <div class="visit-note">
+            <p>如需直接访问站点，可点击 <a href="https://zhc-1jingji.com">一竞技</a> 进入主页面。本介绍页仅为辅助说明，具体功能与内容以实际站点为准。</p>
+        </div>
+    </article>
+
+    <!-- 额外的细微说明：纯信息补充 -->
+    <div style="text-align: center; font-size: 0.8rem; color: #728f8a; margin-top: 12px; padding: 0 10px;">
+        <span>内容整理基于公开资料 · 具体以实际站点展示为准</span>
+    </div>
+
+</div>
+</body>
+</html>
